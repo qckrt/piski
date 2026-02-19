@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Секретное послание</title>
+    <style>
+        body {
+            background-color: #fff0f3;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(255, 75, 110, 0.2);
+            z-index: 2;
+            position: relative;
+        }
+        input {
+            padding: 10px;
+            border: 2px solid #ff4b6e;
+            border-radius: 5px;
+            outline: none;
+            margin-bottom: 10px;
+        }
+        button {
+            background: #ff4b6e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background: #ff1f4b; }
+        #love-content { display: none; }
+        h1 { color: #ff4b6e; }
+        p { color: #333; line-height: 1.6; }
+        
+        .heart-animation {
+            position: absolute;
+            top: -10vh;
+            color: #ff4b6e;
+            font-size: 2em;
+            animation: fall linear infinite;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        /* Анимация падения */
+        @keyframes fall {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(105vh) scale(0.5); opacity: 0; }
+        }
+
+        /* Стили для кнопок внутри признания */
+        .love-btn {
+            background: #ff8fa3;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .love-btn:hover {
+            background: #ff4b6e;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="login-box">
+        <h2>Введите секретный пароль</h2>
+        <p>(Якась дата или якесь слово)</p>
+        <input type="text" id="pass" placeholder="Пароль...">
+        <button onclick="checkPass()">Открыть</button>
+    </div>
+
+    <div id="love-content">
+        <h1>Я тебя люблю! ❤️</h1>
+        <p>Ты — самая важная писька в моей жизни.</p>
+        <p>С тобой каждый день наполнен смыслом и радостью.</p>
+        <p>Спасибо, что ты есть. ❤️</p>
+
+        <div style="margin-top: 20px;">
+            <button class="love-btn" onclick="showMessage('Ты — моё самое яркое солнышко! ☀️')">Нажми, если тебе грустно</button>
+            <button class="love-btn" onclick="showMessage('Я уже лечу к тебе со своими обнимашками! 🤗')">Нажми, если скучаешь</button>
+            <button class="love-btn" onclick="createBurst()">Нажми для супер-сюрприза! 🎉</button>
+        </div>
+
+        <p id="extra-message" style="font-weight: bold; color: #ff4b6e; margin-top: 15px; min-height: 1.6em;"></p>
+
+        <audio id="love-song" src="https://www.dl.dropboxusercontent.com/s/eop98h6x0s0r2j6/sluchaynaya-lyubov-svidanie.mp3" preload="auto"></audio>
+    </div>
+</div>
+
+<script>
+    const SECRET_PASSWORD = '21082024'; 
+    const loveSong = document.getElementById("love-song");
+
+    function checkPass() {
+        var password = document.getElementById("pass").value;
+        if (password === SECRET_PASSWORD) {
+            document.getElementById("login-box").style.display = "none";
+            document.getElementById("love-content").style.display = "block";
+            startHeartAnimation();
+            loveSong.play().catch(e => console.log("Музыка ждет взаимодействия")); 
+        } else {
+            alert("Ох неправильный пароль. Попробуй еще раз!");
+        }
+    }
+
+    function startHeartAnimation() {
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-animation');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 5 + 's';
+            heart.style.opacity = Math.random() * 0.5 + 0.5;
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 8000);
+        }, 300);
+    }
+
+    function showMessage(text) {
+        document.getElementById("extra-message").innerText = text;
+    }
+
+    function createBurst() {
+        for (let i = 0; i < 21; i++) {
+            setTimeout(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-animation');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 2 + 2 + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 3000);
+            }, i * 50);
+        }
+        showMessage("Лови бесконечное количество любви! ✨");
+    }
+</script>
+
+</body>
+</html>
