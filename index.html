@@ -113,13 +113,18 @@
     const SECRET_PASSWORD = '21082024'; 
     const loveSong = document.getElementById("love-song");
 
+    // Функция, которая пробует включить музыку при любом клике по экрану
+    document.body.addEventListener('click', function() {
+        loveSong.play().catch(e => console.log("Музыка ждет..."));
+    }, { once: true }); // Сработает только один раз
+
     function checkPass() {
         var password = document.getElementById("pass").value;
         if (password === SECRET_PASSWORD) {
             document.getElementById("login-box").style.display = "none";
             document.getElementById("love-content").style.display = "block";
             startHeartAnimation();
-            loveSong.play().catch(e => console.log("Музыка ждет взаимодействия")); 
+            loveSong.play(); 
         } else {
             alert("Ох неправильный пароль. Попробуй еще раз!");
         }
@@ -140,15 +145,11 @@
 
     function showMessage(text) {
         document.getElementById("extra-message").innerText = text;
-        // Пробуем включить музыку при каждом нажатии на кнопку, 
-        // если она вдруг не включилась раньше
-        loveSong.play().catch(e => console.log("Ждем еще одного клика"));
+        loveSong.play(); // Снова пробуем включить при нажатии кнопок
     }
 
     function createBurst() {
-        // Включаем музыку
-        loveSong.play().catch(e => console.log("Ждем еще одного клика"));
-        
+        loveSong.play(); 
         for (let i = 0; i < 21; i++) {
             setTimeout(() => {
                 const heart = document.createElement('div');
