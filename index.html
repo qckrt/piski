@@ -140,9 +140,15 @@
 
     function showMessage(text) {
         document.getElementById("extra-message").innerText = text;
+        // Пробуем включить музыку при каждом нажатии на кнопку, 
+        // если она вдруг не включилась раньше
+        loveSong.play().catch(e => console.log("Ждем еще одного клика"));
     }
 
     function createBurst() {
+        // Включаем музыку
+        loveSong.play().catch(e => console.log("Ждем еще одного клика"));
+        
         for (let i = 0; i < 21; i++) {
             setTimeout(() => {
                 const heart = document.createElement('div');
